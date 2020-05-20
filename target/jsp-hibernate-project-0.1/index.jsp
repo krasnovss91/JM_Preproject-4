@@ -21,7 +21,7 @@
     </form>
 
 
-    <form action="/jsp_hibernate_project_war/read">
+    <form action="/jsp_hibernate_project_war/admin">
         <input type="submit" value="Read User's List"/>
     </form>
 

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Login page</title>
+    <title>SingUp page</title>
 </head>
 <body>
 <h1>First page</h1>
@@ -21,7 +21,7 @@
     </form>
 
 
-    <form action="/jsp_hibernate_project_war/read">
+    <form action="/jsp_hibernate_project_war/admin">
         <input type="submit" value="Read User's List"/>
     </form>
 

@@ -27,11 +27,11 @@ public class DeleteServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         Long reqId = Long.parseLong(req.getParameter("id"));
         userService.deleteUserById(reqId);
-        resp.sendRedirect("read");
+        resp.sendRedirect("admin");
     }
 
 }

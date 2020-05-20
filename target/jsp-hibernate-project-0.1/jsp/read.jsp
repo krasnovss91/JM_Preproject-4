@@ -33,9 +33,7 @@
                 <td align="center" size="30"><c:out value="${user.password}"/></td>
                 <td align="center" size="30"><c:out value="${user.role}"/></td>
                 <td>
-                    <form method="GET" action="update?id=<c:out value='${user.id}' />">
-                        <input type="submit" value="Update this User"/>
-                    </form>
+
                     <a href="update?id=<c:out value='${user.id}' />">Update this User</a>
                 </td>
                 <td>

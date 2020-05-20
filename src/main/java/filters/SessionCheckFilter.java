@@ -49,7 +49,7 @@ public class SessionCheckFilter implements Filter {
             resp.sendRedirect("user");
         } else if (userRole == null) {
             req.getServletContext()
-                    .getRequestDispatcher("/jsp/index.jsp")
+                    .getRequestDispatcher("/jsp/singup.jsp")
                     .forward(req, resp);
         }
 

@@ -35,7 +35,7 @@
 
 
     <div class="form-style-2-heading">
-        Already registered! Это я не додумал.
+        Already registered!
 
 
     </div>
