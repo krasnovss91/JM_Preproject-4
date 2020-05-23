@@ -2,10 +2,7 @@ package dao;
 
 
 import model.User;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -30,7 +27,7 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     @Override
-    public User getUserByIdDao(long id) throws SQLException {
+    public User getUserByIdDao(long id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("from User where id = :userId");
@@ -43,7 +40,7 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     @Override
-    public boolean checkUserByNameDao(String name) throws SQLException {
+    public boolean checkUserByNameDao(String name) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("from User where name = :userName");
@@ -57,7 +54,7 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     @Override
-    public boolean checkUserByLoginDao(String login) throws SQLException {
+    public boolean checkUserByLoginDao(String login) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("from User where login = :userLogin");
@@ -70,39 +67,54 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     @Override
-    public void addUserDao(User user) {
+    public void addUserDao(User user) throws HibernateException {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(user);
-        transaction.commit();
-        session.close();
+        try {
+            session.save(user);
+            transaction.commit();
+        } catch (HibernateException e) {
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
     }
 
 
     @Override
-    public void updateUserDao(User user) {
+    public void updateUserDao(User user) throws HibernateException {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.createQuery("UPDATE User SET name=:name, login=:login, password=:password, role=:role WHERE id=:id")
-                .setParameter("name", user.getName())
-                .setParameter("login", user.getLogin())
-                .setParameter("password", user.getPassword())
-                .setParameter("role", user.getRole())
-                .setParameter("id", user.getId())
-                .executeUpdate();
-
-        transaction.commit();
+        try {
+            session.createQuery("UPDATE User SET name=:name, login=:login, password=:password, role=:role WHERE id=:id")
+                    .setParameter("name", user.getName())
+                    .setParameter("login", user.getLogin())
+                    .setParameter("password", user.getPassword())
+                    .setParameter("role", user.getRole())
+                    .setParameter("id", user.getId())
+                    .executeUpdate();
+            transaction.commit();
+        } catch (HibernateException e) {
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
     }
 
     @Override
-    public void deleteUserByIdDao(Long id) throws SQLException {
+    public void deleteUserByIdDao(Long id) throws HibernateException {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("DELETE FROM User WHERE id = :userId");
-        query.setParameter("userId", id);
-        query.executeUpdate();
-        transaction.commit();
-        session.close();
+        try {
+            Query query = session.createQuery("DELETE FROM User WHERE id = :userId");
+            query.setParameter("userId", id);
+            query.executeUpdate();
+            transaction.commit();
+        } catch (HibernateException e) {
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
     }
 
     @Override

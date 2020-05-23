@@ -51,14 +51,6 @@
     <hr>
 
 
-    <form action="/jsp_hibernate_project_war/create">
-        <input type="submit" value="Create the New User"/>
-    </form>
-
-    <form action="/jsp_hibernate_project_war/admin">
-        <input type="submit" value="Read User's List"/>
-    </form>
-
     <a href="<c:url value='/logout' />">Logout</a>
 
 </div>
