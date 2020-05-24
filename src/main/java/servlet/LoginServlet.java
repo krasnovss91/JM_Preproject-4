@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 
 @WebServlet("/index")
@@ -29,6 +30,11 @@ public class LoginServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
+        PrintWriter pwriter = resp.getWriter();
+        if (login.isEmpty() || password.isEmpty()) {
+            pwriter.println("Data is empty!");
+        }
+
         System.out.println("login: " + login + " password:" + password);
         User userTryLogin = UserService.getInstance().isExist(login, password);
         System.out.println("print user from session filter - userTryLogin : " + userTryLogin);
@@ -38,5 +44,6 @@ public class LoginServlet extends HttpServlet {
 
         session.setAttribute("userTryLogin", userTryLogin);
         resp.sendRedirect("admin");
+
     }
 }
