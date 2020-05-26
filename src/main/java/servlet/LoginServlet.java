@@ -43,7 +43,12 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = req.getSession();
 
         session.setAttribute("userTryLogin", userTryLogin);
-        resp.sendRedirect("admin");
 
+        resp.sendRedirect("admin");
+   /*     if (userRole.equals("admin")) {
+            resp.sendRedirect("admin");
+        } else if (userRole.equals("user")) {
+            resp.sendRedirect("user");
+        } */
     }
 }
